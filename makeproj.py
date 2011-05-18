@@ -53,27 +53,27 @@ def vcxproj_handler(src,dst):
 	default_handler(src,path)
 
 def generate_project():
-		tpl_path = os.path.join(os.path.dirname(__file__),"tpl")
-		proj_dir = os.path.join(os.getcwd(),proj_name)
-		print "[~] full path: %s" % proj_dir
-		if os.path.exists(proj_dir):
-			shutil.rmtree(proj_dir)
-		os.mkdir(proj_dir)
-		
-		for dirpath,dirs,files in os.walk(tpl_path):
-			for f in files:
-				full_path = os.path.join(dirpath,f)
-				path = full_path.replace(tpl_path+"\\","")
-				dst = os.path.join(proj_dir,path)
-				
-				dst_dir = os.path.dirname(dst)
-				if not os.path.exists(dst_dir):
-					os.makedirs(dst_dir)
-				
-				func = file_handlers.get(path)
-				if not func:
-					func = default_handler
-				func(full_path,dst)
+	tpl_path = os.path.join(os.path.dirname(__file__),"tpl")
+	proj_dir = os.path.join(os.getcwd(),proj_name)
+	print "[~] full path: %s" % proj_dir
+	if os.path.exists(proj_dir):
+		shutil.rmtree(proj_dir)
+	os.mkdir(proj_dir)
+	
+	for dirpath,dirs,files in os.walk(tpl_path):
+		for f in files:
+			full_path = os.path.join(dirpath,f)
+			path = full_path.replace(tpl_path+"\\","")
+			dst = os.path.join(proj_dir,path)
+			
+			dst_dir = os.path.dirname(dst)
+			if not os.path.exists(dst_dir):
+				os.makedirs(dst_dir)
+			
+			func = file_handlers.get(path)
+			if not func:
+				func = default_handler
+			func(full_path,dst)
 
 def main():
 	global proj_name
