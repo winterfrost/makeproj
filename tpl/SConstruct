@@ -1,0 +1,33 @@
+import os
+
+work_dir = os.getcwd()
+print "[~] work_dir: %s" % work_dir
+
+params = dict(dirs=['.'], duplicate=0)
+params['variant_dir'] = "obj"
+print "[~] variant_dir: %s" % params['variant_dir']
+
+# --------------------------
+# Environment settings
+# --------------------------
+cflags = "/W3 /nologo /GS- /Gy /Os /c /Ob1 /GR- /Zi"
+lflags = "/INCREMENTAL:no /nologo /SUBSYSTEM:WINDOWS /NODEFAULTLIB:LIBCMT.lib /OPT:REF /FIXED:no /DYNAMICBASE /ENTRY:main"
+
+libs = """kernel32.lib msvcrt.lib User32.lib"""
+
+env = Environment(
+	CPPPATH = [work_dir],
+	CCFLAGS = cflags,
+	LINKFLAGS = lflags,
+	LIBS = Split(libs),
+	CPPDEFINES = ["_CRT_SECURE_NO_WARNINGS","_CRT_NONSTDC_NO_DEPRECATE","_WIN32_WINNT=0x0501"]
+)
+env['CPPDEFINES'] += ["_DEBUG","_DBG"]
+env['LINKFLAGS'] += " /DEBUG"
+
+# --------------------------
+# Build
+# --------------------------
+Export('work_dir','env')
+SConscript('SConscript',**params)
+

@@ -1,0 +1,9 @@
+import os
+Import('env','work_dir')
+
+exe_name = "{PROJ_NAME}"
+dirname = "bin"
+outpath = os.path.join(work_dir,dirname,exe_name)
+
+result = env.Program(outpath,Glob("*.cpp"))
+
