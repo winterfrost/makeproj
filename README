@@ -1,0 +1,5 @@
+Python script to generate Visual Studio 2010 project from template.
+
+Usage: makeproj.py project_name
+
+Add directory where makeproj.py to PATH environment variable. 
